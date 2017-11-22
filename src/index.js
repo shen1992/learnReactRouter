@@ -23,12 +23,10 @@ const matchPath = (pathname, options) => {
         }
     }
     const match = new RegExp(`^${path}`).exec(pathname)
-    if (!match)
-        return null
+    if (!match) return null
     const url = match[0]
     const isExact = pathname === url
-    if (exact && !isExact)
-        return null
+    if (exact && !isExact) return null
     return {
         path,
         url,
@@ -37,12 +35,12 @@ const matchPath = (pathname, options) => {
 }
 class Route extends Component {
     componentWillMount() {
-        document.addEventListener("popstate", this.handlePop)
+        window.addEventListener("popstate", this.handlePop)
         register(this)
     }
     componentWillUnmount() {
         unregister(this)
-        document.removeEventListener("popstate", this.handlePop)
+        window.removeEventListener("popstate", this.handlePop)
     }
     handlePop = () => {
         this.forceUpdate()
@@ -57,8 +55,9 @@ class Route extends Component {
         const match = matchPath(window.location.pathname, { path, exact })
         if (!match)
             return null
-        if (component)
+        if (component) {
             return React.createElement(component, { match })
+        }
         if (render)
             return render({ match })
         return null
