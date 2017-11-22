@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
-import logo from './logo.svg';
 
 let instances = []
 const register = (comp) => instances.push(comp)
